@@ -1,0 +1,46 @@
+format_version: 3
+pipelines:
+  springbootwebapp-ci:
+    lock_behavior: lockOnFailure
+    group: SPRINGBOOTWEBAPP
+    materials:
+      repo: 
+       git: https://github.com/devops-at06/EL_springbootwebapp.git
+       branch: master
+    stages: 
+      - Build:
+          jobs:
+            building: 
+              tasks:
+                - exec:
+                    command: ./gradlew
+                    arguments:
+                      - clean
+                      - assemble
+              artifacts:
+                - build:
+                    source: build/libs/*.jar
+                    destination: Build
+      - Test:
+          jobs:
+            Unit_Test: 
+              tasks:
+                - exec:
+                    command: ./gradlew
+                    arguments:
+                      - clean
+                      - test
+                      - jacocoTestReport
+              artifacts:
+                - build:
+                    source: build/reports/tests/test/**/*
+                    destination: html
+                - test:
+                    source: build/test-results/test/*.xml
+                    destination: xml
+                - test:
+                    source: build/reports/jacoco/**/*
+                    destination: jacoco_report                 
+              tabs:
+                unit_test: html/index.html
+                jacoco_report: jacoco_report/index.html         
