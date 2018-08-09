@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.0.4.RELEASE'
 }
 apply plugin: 'java'
+apply plugin: 'jacoco'
 
 group = 'guru.springframework'
 version = '0.0.1-SNAPSHOT'
@@ -24,4 +25,17 @@ dependencies {
 }
 bootRun {
     main = 'guru.springframework.SpringBootWebApplication'
+}
+
+jacoco {
+    toolVersion = "0.8.1"
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/reports/jacoco")
+    }
 }
