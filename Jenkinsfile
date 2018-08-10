@@ -41,8 +41,7 @@ pipeline {
 	stage('CodeQuality'){
 	    steps{
 		echo 'CodeQuality...'
-	        sh './gradlew check sonarqube -Dsonar.organization=escarlethfatima-github -Dsonar.host.url=https://sonarcloud.io 
-                   -Dsonar.projectKey=my:project155'
+	        sh './gradlew check sonarqube -Dsonar.organization=escarlethfatima-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=my:project155'
 	     }
 	    post{
                 always{
