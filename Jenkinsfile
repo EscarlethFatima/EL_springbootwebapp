@@ -38,5 +38,11 @@ pipeline {
 		}
 	    }
         }
+	stage('CodeQuality'){
+	    steps{
+		echo 'CodeQuality...'
+		sh './gradlew sonarqube -Dsonar.organization=escarlethfatima-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=my:project155'
+	     }	
+	}
     }
 }
