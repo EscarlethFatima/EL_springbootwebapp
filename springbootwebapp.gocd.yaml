@@ -51,7 +51,18 @@ pipelines:
                 - exec:
                     command: ./gradlew
                     arguments:
+                      - check
                       - sonarqube
                       - "-Dsonar.organization=escarlethfatima-github"
                       - "-Dsonar.host.url=https://sonarcloud.io"
                       - "-Dsonar.projectKey=my:project155"
+              artifacts:
+                - build:
+                    source: build/reports/findbugs/*.html
+                    destination: findbugs
+                - build:
+                    source: build/reports/pmd/*.html
+                    destination: pmd
+              tabs:
+                findbugs: findbugs/main.html
+                pmd: pmd/main.html
