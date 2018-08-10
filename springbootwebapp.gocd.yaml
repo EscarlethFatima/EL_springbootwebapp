@@ -43,4 +43,15 @@ pipelines:
                     destination: jacoco_report                 
               tabs:
                 unit_test: html/index.html
-                jacoco_report: jacoco_report/index.html         
+                jacoco_report: jacoco_report/index.html 
+      - CodeQuality:
+          jobs:
+            sonarqube:
+              tasks:
+                - exec:
+                    command: ./gradlew
+                    arguments:
+                      - sonarqube
+                      - "-Dsonar.organization=escarlethfatima-github"
+                      - "-Dsonar.host.url=https://sonarcloud.io"
+                      - "-Dsonar.projectKey=my:project155"
