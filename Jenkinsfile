@@ -41,8 +41,28 @@ pipeline {
 	stage('CodeQuality'){
 	    steps{
 		echo 'CodeQuality...'
-		sh './gradlew sonarqube -Dsonar.organization=escarlethfatima-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=my:project155'
-	     }	
+	        sh './gradlew check sonarqube -Dsonar.organization=escarlethfatima-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.projectKey=my:project155'
+	     }
+	    post{
+                always{
+                        publishHTML([allowMissing: true,
+                                   alwaysLinkToLastBuild: false,
+                                   keepAll: true,
+                                   reportDir: 'build/reports/findbugs',
+                                   reportFiles: 'main.html',
+                                   reportTitles: "FindBugs Report",
+                                   reportName: ' Fing Bugs Report'])
+                        publishHTML([allowMissing: true,
+                                   alwaysLinkToLastBuild: false,
+                                   keepAll: true,
+                                   reportDir: 'build/reports/pmd',
+                                   reportFiles: 'main.html',
+                                   reportTitles: "pmd report",
+                                   reportName: 'PMD Report'])
+
+                }
+            }
+			
 	}
     }
 }
