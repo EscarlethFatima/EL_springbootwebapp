@@ -1,6 +1,7 @@
 plugins {
     id 'org.springframework.boot' version '2.0.4.RELEASE'
     id "org.sonarqube" version "2.6.2"
+	id 'com.jonaslasauskas.capsule' version '0.3.0'
 }
 apply plugin: 'java'
 apply plugin: 'jacoco'
@@ -26,6 +27,16 @@ dependencies {
     compile 'com.h2database:h2:1.4.196'
     testCompile 'org.springframework.boot:spring-boot-starter-test:2.0.0.RELEASE'
 }
+
+uploadArchives {
+	repositories {
+		flatDir {
+			name "fileRepo"
+			dirs "repo"
+		}
+	}
+}
+
 bootRun {
     main = 'guru.springframework.SpringBootWebApplication'
 }
@@ -40,13 +51,6 @@ jacocoTestReport {
         xml.enabled false
         csv.enabled false
         html.destination file("${buildDir}/reports/jacoco")
-    }
-}
-uploadArchives {
-    repositories {
-       flatDir {
-           dirs 'repos'
-       }
     }
 }
 
@@ -90,5 +94,11 @@ tasks.withType(Pmd){
     reports{
         xml.enabled=false
         html.enabled=true
+    }
+}
+capsule {
+    capsuleManifest {
+        applicationId = 'SpringBootWebApplication'
+        applicationClass = 'guru.springframework.SpringBootWebApplication'
     }
 }

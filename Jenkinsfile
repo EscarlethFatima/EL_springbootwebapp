@@ -7,11 +7,6 @@ pipeline {
                 echo 'Building...'
 		sh './gradlew clean assemble'	
             }
-	    post {
-		success {
-			archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
-		}
-	    }
         }
         stage('Test') {
             steps {
@@ -64,5 +59,15 @@ pipeline {
             }
 			
 	}
+	stage('Package') {
+            steps {
+                sh './gradlew build capsule'              
+            }	
+	    post {
+                success {
+                    archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
+                }
+            }
+        }				
     }
 }

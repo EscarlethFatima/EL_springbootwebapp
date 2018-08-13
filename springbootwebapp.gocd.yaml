@@ -66,3 +66,16 @@ pipelines:
               tabs:
                 findbugs: findbugs/main.html
                 pmd: pmd/main.html
+      - Package:
+          jobs:
+            package-jar:
+              tasks:
+                - exec:
+                    command: ./gradlew
+                    arguments:                      
+                      - build
+                      - capsule   
+              artifacts:
+                - build:
+                    source: build/libs/*.jar
+                    destination: package 
