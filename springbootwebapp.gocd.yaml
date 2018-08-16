@@ -5,8 +5,8 @@ pipelines:
     group: SPRINGBOOTWEBAPP
     materials:
       repo: 
-       git: https://github.com/devops-at06/EL_springbootwebapp.git
-       branch: master
+       git: https://github.com/EscarlethFatima/EL_springbootwebapp.git
+       branch: gocd-yml-updated
     stages: 
       - Build:
           jobs:
@@ -20,7 +20,7 @@ pipelines:
               artifacts:
                 - build:
                     source: build/libs/*.jar
-                    destination: Build
+                    destination: jar/
       - Test:
           jobs:
             Unit_Test: 
@@ -78,4 +78,24 @@ pipelines:
               artifacts:
                 - build:
                     source: build/libs/*.jar
-                    destination: package 
+                    destination: package
+      - Deploy:
+          jobs:
+            deploy-jar:
+              tasks:
+                - fetch:
+                    stage: Build
+                    job: building
+                    source: jar/
+                - exec:
+                    command: ./gradlew
+                    arguments:
+                      - -b
+                      - deploy.gradle
+                      - deploy
+                      - -Pdev_server=10.28.135.216
+                      - -Puser_server=ubuntu
+                      - -Pkey_path=/home/go/devops.pem
+                      - -Pjar_path=jar/
+                      - -Pjar_name=spring-boot-web-0.0.1-SNAPSHOT-capsule
+

@@ -1,0 +1,24 @@
+plugins {
+  id 'org.hidetake.ssh' version '2.9.0'
+}
+
+remotes {
+  webServer {
+    host = "${dev_server}"
+    user = "${user_server}"
+    identity = file("${key_path}")
+  }
+}
+
+task deploy {
+  doLast {
+    ssh.run {
+      session(remotes.webServer) {
+		  executeScript file('deploy-app.sh')
+          put from: "${jar_path}/${jar_name}.jar", into: "/home/ubuntu/springbootwebapp_deploy/${jar_name}.jar"
+		  execute "nohup java -jar /home/ubuntu/springbootwebapp_deploy/${jar_name}.jar &"
+          
+      }
+    }
+  }
+}
