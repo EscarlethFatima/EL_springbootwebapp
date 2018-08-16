@@ -99,6 +99,6 @@ tasks.withType(Pmd){
 capsule {
     capsuleManifest {
         applicationId = 'SpringBootWebApplication'
-        applicationClass = 'guru.springframework.SpringBootWebApplication'
+        applicationClass = 'org.springframework.boot.loader.JarLauncher'
     }
 }

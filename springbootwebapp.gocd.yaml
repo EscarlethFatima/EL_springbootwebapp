@@ -96,6 +96,6 @@ pipelines:
                       - -Pdev_server=10.28.135.216
                       - -Puser_server=ubuntu
                       - -Pkey_path=/home/go/devops.pem
-                      - -Pjar_path=jar/
+                      - -Pjar_path=package/
                       - -Pjar_name=spring-boot-web-0.0.1-SNAPSHOT-capsule
 
