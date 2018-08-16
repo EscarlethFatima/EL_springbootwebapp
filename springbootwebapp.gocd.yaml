@@ -78,14 +78,14 @@ pipelines:
               artifacts:
                 - build:
                     source: build/libs/*.jar
-                    destination: package
+                    destination: package/
       - Deploy:
           jobs:
             deploy-jar:
               tasks:
                 - fetch:
-                    stage: Build
-                    job: building
+                    stage: Package
+                    job: package-jar
                     source: package/
                 - exec:
                     command: ./gradlew
