@@ -86,7 +86,7 @@ pipelines:
                 - fetch:
                     stage: Build
                     job: building
-                    source: jar/
+                    source: package/
                 - exec:
                     command: ./gradlew
                     arguments:
