@@ -5,8 +5,8 @@ pipelines:
     group: SPRINGBOOTWEBAPP
     materials:
       repo: 
-       git: https://github.com/EscarlethFatima/EL_springbootwebapp.git
-       branch: gocd-updated-acceptance
+       git: https://github.com/devops-at06/EL_springbootwebapp.git
+       branch: master
     stages: 
       - Build:
           jobs:
