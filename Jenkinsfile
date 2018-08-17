@@ -76,7 +76,7 @@ pipeline {
      }
 	 stage('Acceptance'){
 		steps{
-			sh './acceptance_test/gradlew clean test allureReport -p acceptance_test/'
+			sh './acceptance_test/gradlew clean test -p acceptance_test/'
 		}
 		post{
              always{
@@ -87,13 +87,6 @@ pipeline {
                                    reportFiles: 'report-feature_gradle-cucumber-features-gradle-feature.html',
                                    reportTitles: "Cucumber Report",
                                    reportName: 'Cucumber Html Report'])
-                    publishHTML([allowMissing: true,
-                                   alwaysLinkToLastBuild: false,
-                                   keepAll: true,
-                                   reportDir: 'acceptance_test/build/allure-results',
-                                   reportFiles: 'index.html',
-                                   reportTitles: "Allure Report",
-                                   reportName: 'Allure Html Report'])
 
              }
         }
