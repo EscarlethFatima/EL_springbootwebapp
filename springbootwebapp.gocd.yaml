@@ -98,4 +98,20 @@ pipelines:
                       - -Pkey_path=/home/go/devops.pem
                       - -Pjar_path=package/
                       - -Pjar_name=spring-boot-web-0.0.1-SNAPSHOT-capsule
-
+      - Acceptance:
+          jobs:
+            acceptance-test:
+              tasks:
+                - exec:
+                    command: ./acceptance_test/gradlew
+                    arguments:
+                      - clean
+                      - test
+                      - -p
+                      - acceptance_test/
+              artifacts:
+                - test:
+                    source: acceptance_test/build/reports/cucumber-reports/cucumber-html-reports/**/*
+                    destination: acceptance
+              tabs:
+                cucumber-reports: acceptance/report-feature_gradle-cucumber-features-gradle-feature.html
