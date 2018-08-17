@@ -114,4 +114,4 @@ pipelines:
                     source: acceptance_test/build/reports/cucumber-reports/cucumber-html-reports/**/*
                     destination: acceptance
               tabs:
-                cucumber-reports: acceptance/report-feature_gradle-cucumber-features-gradle-feature.html
+                reports: acceptance/report-feature_gradle-cucumber-features-gradle-feature.html
