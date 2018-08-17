@@ -76,7 +76,7 @@ pipeline {
      }
 	 stage('Acceptance'){
 		steps{
-			sh '.acceptance_test/gradlew clean test allureReport -p acceptance_test/'
+			sh './acceptance_test/gradlew clean test allureReport -p acceptance_test/'
 		}
 		post{
              always{
