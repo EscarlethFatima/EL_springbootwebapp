@@ -68,6 +68,35 @@ pipeline {
                     archiveArtifacts artifacts: 'build/libs/*.jar', fingerprint: true
                 }
             }
-        }				
+        }
+     stage('Deploy'){
+        steps{
+            sh './gradlew -b deploy.gradle deploy -Pdev_server=10.28.135.216 -Puser_server=ubuntu -Pkey_path=/home/devops.pem -Pjar_path=build/libs -Pjar_name=spring-boot-web-0.0.1-SNAPSHOT-capsule'
+        }
+     }
+	 stage('Acceptance'){
+		steps{
+			sh '.acceptance_test/gradlew clean test allureReport -p acceptance_test/'
+		}
+		post{
+             always{
+                    publishHTML([allowMissing: true,
+                                   alwaysLinkToLastBuild: false,
+                                   keepAll: true,
+                                   reportDir: 'acceptance_test/build/reports/cucumber-reports/cucumber-html-reports',
+                                   reportFiles: 'report-feature_gradle-cucumber-features-gradle-feature.html',
+                                   reportTitles: "Cucumber Report",
+                                   reportName: 'Cucumber Html Report'])
+                    publishHTML([allowMissing: true,
+                                   alwaysLinkToLastBuild: false,
+                                   keepAll: true,
+                                   reportDir: 'acceptance_test/build/allure-results',
+                                   reportFiles: 'index.html',
+                                   reportTitles: "Allure Report",
+                                   reportName: 'Allure Html Report'])
+
+             }
+        }
+	  }
     }
 }
